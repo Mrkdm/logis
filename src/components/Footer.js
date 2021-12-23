@@ -14,7 +14,7 @@ const Footer = () => {
                </ul>
          
                <small>
-                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi voluptate in atque molestiae odit similique cum quas consectetur praesentium inventore suscipit vel, maiores fugiat fuga laborum rem alias. Quos, temporibus?
+                   Todos los derechos reservados logisticainmobiliaria
                </small>
            </div>
        </footer>

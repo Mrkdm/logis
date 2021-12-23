@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import Logo from '../../assets/images/Logo-Logistica.png'
+import {  useNavigate } from 'react-router-dom'
+
 
 import axios from 'axios'
 import Navbar from '../../components/Navbar'
+import FormQuestion from '../../components/FormQuestion'
+import WhatsappBottom from '../../components/WhatsappBottom'
 
 
 
 const CasasMerida = () => {
 
-
+    const navigate = useNavigate()
     const [casas, setCasas] = useState([])
-
+ 
     useEffect(() => {
         (async () => {
-            axios.get('http://68.183.16.45/api/images/ubication/Merida').then((res) => setCasas(res.data)).catch((err) => console.log(err))
+           await axios.get('http://68.183.16.45/api/images/ubication/Merida').then((res) => setCasas(res.data)).catch((err) => console.log(err))
         })();
     }, [])
+
     return (
         <div>
             <Navbar />
@@ -25,6 +28,7 @@ const CasasMerida = () => {
                 <div className="row">
                     {
                         casas.map((img) => {
+                            
                             return (
                                 <div className="col-lg-12 p-2 border m-4 bgLightGrey">
                                     <div className="row">
@@ -33,7 +37,7 @@ const CasasMerida = () => {
                                         </div>
                                         <div className="col-lg-8">
 
-                                            <Link to="/casa" className="colorPink m-3">{img.title}</Link>
+                                            <p style={{cursor:'pointer'}} onClick={()=>{navigate( `/casa/${img._id}`)} }className="colorPink m-3">{img.title}</p>
                                             <hr />
                                             <div className="row">
                                                 <div className="col-lg-2 col-sm-6">
@@ -71,62 +75,7 @@ const CasasMerida = () => {
                                                 <div className="col-lg-2">
 
 
-                                                    <button type="button" className="btn btn-outline-dark btn-sm mt-4" data-toggle="modal" data-target=".bd-example-modal-lg">Contactar</button>
-
-                                                    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog modal-lg">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLabel">Nuevo mensage</h5>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div className="container">
-                                                                        <div className="row">
-                                                                            <div className="col-lg-6">
-                                                                                <h5>Contactar</h5>
-                                                                                <img src={Logo} style={{ width: 270, objectFit: 'cover' }} alt="" />
-                                                                            </div>
-                                                                            <div className="col-lg-6">
-                                                                                <form>
-                                                                                    <div class="form-group">
-                                                                                        <label for="recipient-name" class="col-form-label">Email:</label>
-                                                                                        <input type="text" class="form-control" id="recipient-name" />
-                                                                                    </div>
-                                                                                    <div className="row">
-                                                                                        <div className="col-lg-6">
-                                                                                            <div class="form-group">
-                                                                                                <label for="message-text" class="col-form-label">Nombre:</label>
-                                                                                                <input type="text" class="form-control" id="recipient-name" />
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div className="col-lg-6">
-                                                                                            <div class="form-group">
-                                                                                                <label for="message-text" class="col-form-label">Teléfono:</label>
-                                                                                                <input type="text" class="form-control" id="recipient-name" />
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="form-group">
-                                                                                        <label for="message-text" class="col-form-label">Mensaje:</label>
-                                                                                        <textarea value="Hola, me interesa este inmueble que vi en LogisticaInmobiliaria y quiero que me contacten. Gracias." class="form-control" id="message-text"></textarea>
-                                                                                    </div>
-                                                                                </form>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary">9982154044</button>
-                                                                    <button type="button" onClick={axios.post('http://68.183.16.45/api/message', 
-                                                                )} class="btn btn-primary">Send message</button>
-                                                             
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                   <FormQuestion data={img}/>
 
 
 
@@ -141,7 +90,8 @@ const CasasMerida = () => {
                     }
                 </div>
             </div>
-            <div class="fixed-bottom "><a href="https://api.whatsapp.com/send?phone=5219982323301"><i class="fab fa-whatsapp" style={{fontSize: 55, float: 'right', margin: 30, cursor: 'pointer', color: '#25D366'}}></i></a></div>
+
+            <WhatsappBottom/>
         </div>
     )
 }
